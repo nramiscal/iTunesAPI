@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Index</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <form action="/get_movie" method="post">
+            <label for="user_input">Enter Artist's Name:</label>
+            <input id="user_input" name="user_input" type="text">
+            <input type="submit" value="search">
+        </form>
+        <br><br>
+        <!-- <iframe width="420" height="315" src=""></iframe> -->
+
+        <video controls src=""></video>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // alert("using jquery!")
+
+                $('form').submit(function(event){
+                    // console.log($(this).serialize());
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function(serverResponse){
+                            // console.log(serverResponse.results[0]['previewUrl']);
+                            $("video").attr("src", serverResponse.results[0]['previewUrl']);
+                        }
+                    });
+                    $('#user_input').val("");
+                    event.preventDefault();
+                })
+
+            });
+        </script>
+
+    </body>
+</html>
